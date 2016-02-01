@@ -30,7 +30,7 @@
 				<dl>
 					<dt>Select from</dt>
 					<dd>
-						<label><input type="radio" ng-model="type" value="numbers">ranged numbers</label>
+						<label><input type="radio" ng-model="type" value="numbers">ranged integers</label>
 						<br>
 						<label><input type="radio" ng-model="type" value="inputs">typed inputs</label>
 					</dd>
@@ -65,6 +65,7 @@
 								<button ng-show="$index<inputs.length-1" ng-click="delete($index);$parent.type='inputs'">Delete</button>
 							</li>
 						</ol>
+						Note: Blank inputs except the last one are possible to be selected.
 					</dd>
 				</dl>
 				<dl ng-show="type">
