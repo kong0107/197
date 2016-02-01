@@ -35,7 +35,7 @@ body > header a {
 #brand {
 	font-size: xx-large;
 	font-weight: bold;
-	margin: .5em 1em;
+	margin: .2em .4em;
 }
 #siteNav {
 	margin: 1em 1em .5em 4em;
@@ -52,19 +52,40 @@ body > header a {
 /**
  * Content
  */
-h1 { font-size: 300%; }
-h2 { font-size: 250%; }
-h3 { font-size: 200%; }
-h4 { font-size: 175%; }
-h5 { font-size: 150%; }
-h6 { font-size: 125%; }
+body > section {
+	padding: .5em;
+}
+h1 { font-size: 250%; }
+h2 { font-size: 200%; }
+h3 { font-size: 175%; }
+h4 { font-size: 150%; }
+h5 { font-size: 140%; }
+h6 { font-size: 130%; }
 .dlTable > dl > dt { font-weight: bold; }
 .tableCell,
 .dlTable > dl > dt,
 .dlTable > dl > dd {
 	padding: .3em;
-	border: 1px solid #000;
 }
+input[type=number] { width: 4em; }
+button { min-width: 1.5em; }
+
+.active { }
+.disactive { opacity: 0.5; }
+
+#resultList li {
+	padding: .75em;
+}
+#resultList li span {
+	background: rgb(53,76,140);
+	font-family: helvetica, arial, sans-serif;
+	color: #fff;
+	padding: .5em;
+	font-weight: bold;
+	border-radius: 10px;
+	font-size: larger;
+}
+	
 
 /**
  * Footer
