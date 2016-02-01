@@ -57,27 +57,33 @@
 					</dd>
 				</dl>
 				<dl ng-class="(type=='inputs')?'active':'disactive'">
-					<dt>Inputs</dt>
+					<dt>
+						Inputs
+						<br>
+						<button ng-disabled="inputs.length==1" ng-click="inputs=[''];type='inputs'">Clear</button>
+					</dt>
 					<dd>
 						<ol>
 							<li ng-repeat="dump in inputs track by $index">
-								<input ng-model="inputs[$index]" ng-change="checkBlank()" ng-focus="$parent.type='inputs'">
+								<input ng-model="inputs[$index]" tabindex="{{$index+1}}" ng-change="checkBlank()" ng-focus="$parent.type='inputs'">
 								<button ng-show="$index<inputs.length-1" ng-click="delete($index);$parent.type='inputs'">Delete</button>
 							</li>
 						</ol>
-						Note: Blank inputs except the last one are possible to be selected.
+						<p><em>Tip</em>: Use <code>Tab</code> key to jump to the next input, and <code>Shift + Tab</code> back to the previous one.</p>
 					</dd>
 				</dl>
 				<dl ng-show="type">
 					<dt>Operation</dt>
 					<dd><button ng-click="main()">RUN</button></dd>
 				</dl>
-				<dl ng-show="result">
+				<dl ng-show="result.length">
 					<dt>Result</dt>
 					<dd>
+						Last execution: <time ng-bind="lastExecution|date:'HH:mm:ss'"></time>
 						<ol id="resultList">
 							<li ng-repeat="elem in result track by $index">
-								<span>{{elem}}</span>
+								<span ng-if="elem.substr(0,4)!='http'" ng-bind="elem"></span>
+								<img ng-if="elem.substr(0,4)=='http'" ng-src="{{elem}}">
 							</li>
 						</ol>
 					</dd>

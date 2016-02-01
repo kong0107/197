@@ -1,13 +1,19 @@
 angular
 .module('app', [])
 .controller('controller', function($scope) {
+	$scope.counter = 0;
 	$scope.type = 'numbers';
 	$scope.quantity = 3;
 	$scope.minimum = 1;
 	$scope.maximum = 10;
 	$scope.result = [];
 
-	$scope.inputs = ['bondage', 'discipline', 'dominance', 'submission', 'sadism', 'masochism'];
+	$scope.inputs = [
+		'bondage',
+		'discipline',
+		'http://hotline.org.tw/sites/hotline.org.tw/files/vigor_logo.png',
+		'http://praatw.org/images/praa_1.gif'
+	];
 	$scope.checkBlank = function() {
 		if($scope.inputs[$scope.inputs.length - 1]) {
 			$scope.inputs.push('');
@@ -46,6 +52,8 @@ angular
 			copy[rand] = tmp;
 		}
 		$scope.result = copy.slice(0, $scope.quantity);
+		$scope.counter++;
+		$scope.lastExecution = new Date;
 	}
 
 	$scope.checkBlank();

@@ -17,6 +17,7 @@ a {
 }
 a[href]:hover { text-decoration: underline; }
 a img { border: 0; }
+p { margin: .3em 0; }
 
 /**
  * Header
@@ -72,10 +73,14 @@ button { min-width: 1.5em; }
 
 .active { }
 .disactive { opacity: 0.5; }
-
-#resultList li {
-	padding: .75em;
+code {
+	padding: .2em;
+	background-color: #ccc;
+	border-radius: 4px;
 }
+
+#resultList li:only-of-type { list-style-type: none; }
+#resultList li { padding: .75em; }
 #resultList li span {
 	background: rgb(53,76,140);
 	font-family: helvetica, arial, sans-serif;
@@ -85,7 +90,7 @@ button { min-width: 1.5em; }
 	border-radius: 10px;
 	font-size: larger;
 }
-	
+
 
 /**
  * Footer
