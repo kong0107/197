@@ -85,10 +85,10 @@ code {
 	background: rgb(53,76,140);
 	font-family: helvetica, arial, sans-serif;
 	color: #fff;
-	padding: .5em;
+	padding: 5px .5em;
 	font-weight: bold;
 	border-radius: 10px;
-	font-size: larger;
+	font-size: 500%;
 }
 
 
