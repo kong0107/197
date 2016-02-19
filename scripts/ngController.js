@@ -1,7 +1,22 @@
 angular
-.module('app', [])
+.module('app', ['ngRoute'])
+.config(function($routeProvider) {
+	$routeProvider
+	.when('/randomSelector', {
+		templateUrl: 'randomSelector',
+		controller: 'randomSelector'
+	})
+	.when('/grouping', {
+		templateUrl: 'grouping',
+		controller: 'grouping'
+	})
+	.otherwise({
+		redirectTo: '/randomSelector'
+	});
+})
 .controller('controller', function($scope) {
-	$scope.counter = 0;
+})
+.controller('randomSelector', function($scope) {
 	$scope.type = 'numbers';
 	$scope.quantity = 3;
 	$scope.minimum = 1;
@@ -52,9 +67,45 @@ angular
 			copy[rand] = tmp;
 		}
 		$scope.result = copy.slice(0, $scope.quantity);
-		$scope.counter++;
 		$scope.lastExecution = new Date;
 	}
 
 	$scope.checkBlank();
+})
+.controller('grouping', function($scope) {
+	$scope.maximum = 37;
+	$scope.skips = ['29', '8'];
+	$scope.capacity = 4;
+	$scope.main = function() {
+		var skips = $scope.skips.map(function(num) {return parseInt(num, 10);});
+
+		// 把需要排序的先依序列出
+		var arr = [];
+		for(var i = 1; i <= $scope.maximum; ++i)
+			if(skips.indexOf(i) == -1) arr.push(i);
+
+		// 亂數排列
+		// @see http://stackoverflow.com/questions/2450954/#2450976
+		for(var i = arr.length - 1; i >= 0; --i) {
+			var rand = Math.floor(Math.random() * (i + 1));
+			var tmp = arr[i];
+			arr[i] = arr[rand];
+			arr[rand] = tmp;
+		}
+
+		// 依指定數量塞進結果中
+		var result = [];
+		while(arr.length >= $scope.capacity) {
+			var cur = [];
+			for(var i = 0; i < $scope.capacity; ++i)
+				cur.push(arr.pop());
+			result.push(cur);
+		}
+
+		// 把餘下的依序塞入陣列
+		for(var i = 0; arr.length; ++i) result[i].push(arr.pop());
+
+		$scope.result = result.reverse();
+		$scope.lastExecution = new Date;
+	};
 });
