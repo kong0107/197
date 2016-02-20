@@ -128,4 +128,15 @@ angular
 		$scope.result = result.reverse();
 		$scope.lastExecution = new Date;
 	};
+
+	$scope.getMailBody = function() {
+		var eol = '%0D%0A';
+		var str = '';
+		str += 'Maximum: ' + $scope.maximum + eol;
+		str += 'Skips: ' + JSON.stringify($scope.skips) + eol;
+		str += 'Group Amount: ' + $scope.groupAmount + eol;
+		str += 'Capacity: ' + $scope.capacity + eol;
+		str += 'Grouping: ' + JSON.stringify($scope.result, null, '\t') + eol;
+		return str;
+	}
 });

@@ -153,8 +153,7 @@
 				<p>Last execution: <time ng-bind="lastExecution|date:'HH:mm:ss'"></time></p>
 				<button>
 					<a target="_blank" 
-						ng-click="mailBody={maximum: maximum, skips: skips, groupAmount: groupAmount, capacity: capacity, result: result}"
-						href="mailto:?subject=Grouping of English class&amp;body={{(mailBody|json).replace('\n', '%0D%0A')}}"
+						href="mailto:?subject=Grouping of English class&amp;body={{getMailBody()}}"
 					>Mail the result</a>
 				</button>
 				<ol id="resultList">
