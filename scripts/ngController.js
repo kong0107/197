@@ -131,12 +131,14 @@ angular
 
 	$scope.getMailBody = function() {
 		var eol = '%0D%0A';
+		if(!$scope.result) return;
+
 		var str = '';
 		str += 'Maximum: ' + $scope.maximum + eol;
 		str += 'Skips: ' + JSON.stringify($scope.skips) + eol;
 		str += 'Group Amount: ' + $scope.groupAmount + eol;
-		str += 'Capacity: ' + $scope.capacity + eol;
-		str += 'Grouping: ' + JSON.stringify($scope.result, null, '\t') + eol;
+		str += 'Capacity: ' + $scope.capacity + ' or more' + eol;
+		str += 'Grouping:' + eol + JSON.stringify($scope.result).replace(/\],/g, '],' + eol) + eol;
 		return str;
 	}
 });
