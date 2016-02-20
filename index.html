@@ -100,18 +100,36 @@
 	<div class="dlTable">
 		<dl>
 			<dt>Maximum</dt>
-			<dd><input type="number" ng-model="maximum" min="1"></dd>
+			<dd>
+				<input type="number" ng-model="maximum" min="1" ng-change="skipsChanged()" ng-model-options="{debounce: 1000}">
+				<button ng-click="maximum=maximum+1; skipsChanged();">+</button>
+				<button ng-click="maximum=(maximum>1)?maximum-1:1; skipsChanged();">-</button>
+			</dd>
 		</dl>
 		<dl>
 			<dt>Skips</dt>
 			<dd>
-				<input ng-list=" " ng-trim="false" ng-model="skips">
-				<p>(separate numbers by a whitespace)</p>
+				<input ng-list=" " ng-trim="false" ng-model="skips" ng-model-options="{debounce: 1000}" ng-change="skipsChanged()">
+				<p style="text-indent: -2em;"><em>Tip</em>: Numbers shall be separated by whitespaces.</p>
+			</dd>
+		</dl>
+		<dl>
+			<dt>Amount of groups</dt>
+			<dd>
+				<input type="number" ng-model="groupAmount" ng-change="groupAmountChanged()" min="1">
+				<button ng-click="groupAmount=groupAmount+1; groupAmountChanged();">+</button>
+				<button ng-click="groupAmount=(groupAmount>1)?groupAmount-1:1; groupAmountChanged();">-</button>
 			</dd>
 		</dl>
 		<dl>
 			<dt>Capacity of one group</dt>
-			<dd><input type="number" ng-model="capacity" min="1"></dd>
+			<dd>
+				<input type="number" ng-model="capacity" ng-change="capacityChanged()" min="1">
+				<button ng-click="capacity=capacity+1; capacityChanged();">+</button>
+				<button ng-click="capacity=(capacity>1)?capacity-1:1; capacityChanged();">-</button>
+				<br>
+				<p style="text-indent: -2em;"><em>Tip</em>: Numbers in each group of the result would<br>never be less than the capacity, but may be more.</p>
+			</dd>
 		</dl>
 		<!--dl>
 			<dt>Debug</dt>
@@ -133,7 +151,12 @@
 			<dt>Result</dt>
 			<dd>
 				<p>Last execution: <time ng-bind="lastExecution|date:'HH:mm:ss'"></time></p>
-				<p><button><a target="_blank" href="mailto:?subject=Grouping of English class&amp;body={{result}}">Mail the result</a></button></p>
+				<button>
+					<a target="_blank" 
+						ng-click="mailBody={maximum: maximum, skips: skips, groupAmount: groupAmount, capacity: capacity, result: result}"
+						href="mailto:?subject=Grouping of English class&amp;body={{(mailBody|json).replace('\n', '%0D%0A')}}"
+					>Mail the result</a>
+				</button>
 				<ol id="resultList">
 					<li ng-repeat="group in result track by $index">
 						<span ng-repeat="number in group">{{number}}</span>

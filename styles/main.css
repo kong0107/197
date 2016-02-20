@@ -92,6 +92,13 @@ code {
 	margin: 0 10px;
 }
 
+.dlTable > dl:nth-of-type(odd) {
+	background-color: #ccc;
+}
+.dlTable > dl:nth-of-type(even) {
+	background-color: #eee;
+}
+
 
 /**
  * Footer

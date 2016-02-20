@@ -14,8 +14,7 @@ angular
 		redirectTo: '/randomSelector'
 	});
 })
-.controller('controller', function($scope) {
-})
+.controller('controller', function($scope) {})
 .controller('randomSelector', function($scope) {
 	$scope.type = 'numbers';
 	$scope.quantity = 3;
@@ -73,10 +72,37 @@ angular
 	$scope.checkBlank();
 })
 .controller('grouping', function($scope) {
+	$scope.Math = Math;
 	$scope.maximum = 37;
 	$scope.skips = ['29', '8'];
 	$scope.capacity = 4;
+
+	$scope.skipsChanged = function() {
+		$scope.capacityChanged();
+		var realSkips = [];
+		$scope.skips.forEach(function(num) {
+			num = parseInt(num, 10);
+			if(!isNaN(num)
+				&& (realSkips.indexOf(num) == -1)
+				&& num < $scope.maximum
+			) realSkips.push(num);
+		});
+		$scope.skips = realSkips.sort(function(a,b){return a-b;});
+		//console.log(realSkips);
+	}
+	$scope.capacityChanged = function() {
+		$scope.groupAmount = Math.floor(($scope.maximum - $scope.skips.length) / $scope.capacity);
+	};
+	$scope.groupAmountChanged = function() {
+		$scope.capacity = Math.floor(($scope.maximum - $scope.skips.length) / $scope.groupAmount);
+	};
+
+	$scope.skipsChanged();
+	$scope.capacityChanged();
+
 	$scope.main = function() {
+		//var skips = $scope.skips = $scope.realSkips;
+		//$scope.skipsChanged();
 		var skips = $scope.skips.map(function(num) {return parseInt(num, 10);});
 
 		// 把需要排序的先依序列出
@@ -93,17 +119,11 @@ angular
 			arr[rand] = tmp;
 		}
 
-		// 依指定數量塞進結果中
+		// 依序塞入各組中，每組一次塞一個。
 		var result = [];
-		while(arr.length >= $scope.capacity) {
-			var cur = [];
-			for(var i = 0; i < $scope.capacity; ++i)
-				cur.push(arr.pop());
-			result.push(cur);
-		}
-
-		// 把餘下的依序塞入陣列
-		for(var i = 0; arr.length; ++i) result[i].push(arr.pop());
+		for(var i = 0; i < $scope.groupAmount; ++i) result[i] = [];
+		for(var i = 0; arr.length; ++i)
+			result[i % $scope.groupAmount].push(arr.pop());
 
 		$scope.result = result.reverse();
 		$scope.lastExecution = new Date;
